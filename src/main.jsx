@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+
 import "./index.css";
+import routers from "./Routers/main-routers";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <h1>Hello</h1>
+    <RouterProvider router={routers} />
   </React.StrictMode>
 );
