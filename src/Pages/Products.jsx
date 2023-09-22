@@ -51,6 +51,17 @@ const Products = () => {
           </li>
         </ol>
       </nav>
+      <section>
+        <div className="mb-8 max-w-[570px] md:mb-0 lg:mb-12">
+          <h1 className="mb-5 text-2xl font-bold text-black dark:text-white sm:text-3xl">
+            Product gallery
+          </h1>
+          <p className="text-base font-medium leading-relaxed text-body-color">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius
+            eros eget sapien consectetur ultrices. Ut quis dapibus libero.
+          </p>
+        </div>
+      </section>
       <ProductList productsList={products} limit={12} />
     </section>
   );
