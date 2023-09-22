@@ -4,6 +4,7 @@ import Home from "../Pages/Home";
 import Products from "../Pages/Products";
 import Dashboard from "../Layouts/Dashboard";
 import ProductDetailsTemplate from "../Layouts/ProductDetailsTemplate";
+import About from "../Pages/About";
 
 const routers = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const routers = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <h1 className="text-4xl font-bold text-center">About page</h1>,
+        element: <About />,
       },
       {
         path: "/contact",
