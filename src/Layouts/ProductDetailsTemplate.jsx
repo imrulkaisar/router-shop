@@ -1,6 +1,7 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import PageTitle from "../Components/PageTitle";
 
 const ProductDetailsTemplate = () => {
   const response = useLoaderData();
@@ -20,6 +21,7 @@ const ProductDetailsTemplate = () => {
 
   return (
     <>
+      <PageTitle title={`${title} - Router shop`} />
       <nav className="flex pb-8" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">

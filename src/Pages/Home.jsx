@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import PageTitle from "../Components/PageTitle";
 
 const Home = () => {
   return (
     <>
+      <PageTitle title="Router shop - home" />
       <section
         className="hero bg-center bg-no-repeat
       bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] 

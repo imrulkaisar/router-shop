@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PageTitle from "../Components/PageTitle";
 
 const Contact = () => {
   return (
     <>
+      <PageTitle title="Contact us - Router shop" />
       <nav className="flex pb-8" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
