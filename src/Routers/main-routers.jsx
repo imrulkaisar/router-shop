@@ -3,6 +3,7 @@ import PageTemplate from "../Layouts/PageTemplate";
 import Home from "../Pages/Home";
 import Products from "../Pages/Products";
 import Dashboard from "../Layouts/Dashboard";
+import ProductDetailsTemplate from "../Layouts/ProductDetailsTemplate";
 
 const routers = createBrowserRouter([
   {
@@ -17,6 +18,12 @@ const routers = createBrowserRouter([
         path: "/products",
         element: <Products />,
         loader: () => fetch("https://dummyjson.com/products"),
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetailsTemplate />,
+        loader: ({ params }) =>
+          fetch(`https://dummyjson.com/products/${params.id}`),
       },
       {
         path: "/about",
