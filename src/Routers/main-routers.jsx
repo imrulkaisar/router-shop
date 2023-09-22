@@ -6,6 +6,7 @@ import Dashboard from "../Layouts/Dashboard";
 import ProductDetailsTemplate from "../Layouts/ProductDetailsTemplate";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
+import ErrorPage from "../Pages/ErrorPage";
 
 const routers = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const routers = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
