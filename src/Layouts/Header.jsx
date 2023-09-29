@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
+import { useUserContext } from "../Context/UserContext";
+
 const Header = () => {
+  const { user, setUser } = useUserContext();
+  const { isLoggedIn, photoURL } = user;
+  console.log(user);
+
   return (
     <>
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
@@ -17,14 +23,51 @@ const Header = () => {
             </span>
           </Link>
           <div className="flex md:order-2">
-            <NavLink to={"/dashboard"}>
-              <button
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Dashboard
-              </button>
-            </NavLink>
+            {isLoggedIn ? (
+              <div className="flex gap-2">
+                <NavLink to={"/dashboard"}>
+                  <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Dashboard
+                  </button>
+                </NavLink>
+                <div>
+                  {photoURL ? (
+                    <img
+                      className="w-10 h-10 rounded-full"
+                      src={photoURL}
+                      alt="Rounded avatar"
+                    />
+                  ) : (
+                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                      <svg
+                        className="absolute w-12 h-12 text-gray-400 -left-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <NavLink to={"/login"}>
+                <button
+                  type="button"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Login
+                </button>
+              </NavLink>
+            )}
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"

@@ -2,11 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import PageTemplate from "../Layouts/PageTemplate";
 import Home from "../Pages/Home";
 import Products from "../Pages/Products";
-import Dashboard from "../Layouts/Dashboard";
+import Dashboard from "../Pages/Dashboard";
 import ProductDetailsTemplate from "../Layouts/ProductDetailsTemplate";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import ErrorPage from "../Pages/ErrorPage";
+import Login from "../Pages/Login";
 
 const routers = createBrowserRouter([
   {
@@ -37,14 +38,18 @@ const routers = createBrowserRouter([
         element: <Contact />,
       },
       {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
         path: "*",
         element: <ErrorPage />,
       },
     ],
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
   },
 ]);
 
