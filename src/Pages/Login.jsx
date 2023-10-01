@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -13,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
 
@@ -31,6 +33,15 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser({ ...user, ...result.user, isLoggedIn: true });
+        navigate("/dashboard");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const handleGithubSignin = () => {
+    signInWithPopup(auth, githubProvider)
       .then((result) => {
         setUser({ ...user, ...result.user, isLoggedIn: true });
         navigate("/dashboard");
@@ -94,7 +105,10 @@ const Login = () => {
         <button className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize">
           <AiFillFacebook /> Login with Facebook
         </button>
-        <button className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize">
+        <button
+          onClick={handleGithubSignin}
+          className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
+        >
           <AiFillGithub /> Login with Github
         </button>
       </div>
