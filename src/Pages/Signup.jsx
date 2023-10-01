@@ -1,7 +1,6 @@
-import React from "react";
 import {
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
@@ -11,7 +10,7 @@ import auth from "../Firebase/Firebase.config";
 import { useUserContext } from "../Context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Signup = () => {
   const googleProvider = new GoogleAuthProvider();
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = e.target;
 
-    signInWithEmailAndPassword(auth, email.value, password.value)
+    createUserWithEmailAndPassword(auth, email.value, password.value)
       .then((result) => {
         setUser({ ...user, ...result.user, isLoggedIn: true });
         e.target.reset();
@@ -33,15 +32,16 @@ const Login = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
       })
       .catch((error) => console.error(error));
+
+    user.isLoggedIn && navigate("/dashboard");
   };
 
   return (
     <div className="max-w-md mx-auto flex flex-col space-y-5">
       <h1 className="mb-5 text-2xl text-center font-bold text-black dark:text-white sm:text-3xl">
-        Login form
+        Register an account
       </h1>
       <div className="border-2 border-gray-400 p-5 rounded-lg">
         <form onSubmit={handleSubmit}>
@@ -80,7 +80,7 @@ const Login = () => {
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Log in
+            Register new account
           </button>
         </form>
       </div>
@@ -89,20 +89,20 @@ const Login = () => {
           onClick={handleGoogleLogin}
           className="flex gap-2 items-center bg-gray-50 text-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
-          <FcGoogle /> Login with google
+          <FcGoogle /> Sign up with google
         </button>
         <button className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize">
-          <AiFillFacebook /> Login with Facebook
+          <AiFillFacebook /> Sign up with Facebook
         </button>
         <button className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize">
-          <AiFillGithub /> Login with Github
+          <AiFillGithub /> Sign up with Github
         </button>
       </div>
       <div>
         <p>
-          Don't have account? please{" "}
-          <Link to="/signup">
-            <span className="text-blue-700">sign up here.</span>
+          If you already have an account please{" "}
+          <Link to="/login">
+            <span className="text-blue-700">Login here.</span>
           </Link>
         </p>
       </div>
@@ -110,4 +110,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
