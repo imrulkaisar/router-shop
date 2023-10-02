@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  FacebookAuthProvider,
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -14,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
   const githubProvider = new GithubAuthProvider();
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
@@ -33,6 +35,15 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser({ ...user, ...result.user, isLoggedIn: true });
+        navigate("/dashboard");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const handleFacebookLogin = () => {
+    signInWithPopup(auth, facebookProvider)
       .then((result) => {
         setUser({ ...user, ...result.user, isLoggedIn: true });
         navigate("/dashboard");
@@ -102,7 +113,10 @@ const Login = () => {
         >
           <FcGoogle /> Login with google
         </button>
-        <button className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize">
+        <button
+          onClick={handleFacebookLogin}
+          className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize"
+        >
           <AiFillFacebook /> Login with Facebook
         </button>
         <button
