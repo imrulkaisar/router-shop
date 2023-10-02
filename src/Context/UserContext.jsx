@@ -1,16 +1,72 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import auth from "../Firebase/Firebase.config";
 
-const UserContext = createContext();
+export const UserContext = createContext(null);
 
-export const useUserContext = () => useContext(UserContext);
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    isLoggedIn: false,
-  });
+  const createUser = (email, password) => {
+    setLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        console.log(response.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const signIn = (email, password) => {
+    setLoading(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((resonse) => {
+        console.log(resonse.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const logOut = () => {
+    signOut(auth)
+      .then((response) => {
+        console.log(response.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+      console.log("Current user:", currentUser);
+    });
+
+    return () => {
+      unSubscribe();
+    };
+  }, []);
+
+  const userInfo = {
+    loading,
+    user,
+    createUser,
+    signIn,
+    logOut,
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={userInfo}>{children}</UserContext.Provider>
   );
 };
+
+export default UserContextProvider;

@@ -8,13 +8,14 @@ import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook, AiFillGithub } from "react-icons/ai";
 
 import auth from "../Firebase/Firebase.config";
-import { useUserContext } from "../Context/UserContext";
+import { UserContext } from "../Context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 const Signup = () => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
-  const { user, setUser } = useUserContext();
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

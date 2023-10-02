@@ -1,18 +1,22 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Footer from "../Layouts/Footer";
-import Header from "../Layouts/Header";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { useUserContext } from "../Context/UserContext";
+import { UserContext } from "../Context/UserContext";
 
 const Dashboard = () => {
-  const { user, setUser } = useUserContext();
+  const { loading, user, logOut } = useContext(UserContext);
   const navigate = useNavigate();
   const { displayName, photoURL, email } = user;
 
   const handleLogOut = () => {
-    setUser({ isLoggedIn: false });
+    logOut();
     navigate("/login");
   };
+  console.log(loading);
+
+  if (loading) {
+    return <p>loading data...</p>;
+  }
+
   return (
     <>
       <h1 className="text-4xl text-center font-bold">Hello, {displayName}</h1>

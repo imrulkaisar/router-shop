@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
-import { UserContextProvider } from "../Context/UserContext";
+import UserContextProvider from "../Context/UserContext";
 
 const PageTemplate = () => {
   return (

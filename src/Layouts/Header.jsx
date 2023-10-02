@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import { useUserContext } from "../Context/UserContext";
+import { UserContext } from "../Context/UserContext";
 
 const Header = () => {
-  const { user, setUser } = useUserContext();
-  const { isLoggedIn, photoURL } = user;
-  console.log(user);
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -23,7 +21,7 @@ const Header = () => {
             </span>
           </Link>
           <div className="flex md:order-2">
-            {isLoggedIn ? (
+            {user ? (
               <div className="flex gap-2">
                 <NavLink to={"/dashboard"}>
                   <button
@@ -34,10 +32,10 @@ const Header = () => {
                   </button>
                 </NavLink>
                 <div>
-                  {photoURL ? (
+                  {user?.photoURL ? (
                     <img
                       className="w-10 h-10 rounded-full"
-                      src={photoURL}
+                      src={user?.photoURL}
                       alt="Rounded avatar"
                     />
                   ) : (

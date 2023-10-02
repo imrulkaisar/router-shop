@@ -1,63 +1,19 @@
-import React from "react";
-import {
-  FacebookAuthProvider,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook, AiFillGithub } from "react-icons/ai";
 
-import auth from "../Firebase/Firebase.config";
-import { useUserContext } from "../Context/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const Login = () => {
-  const googleProvider = new GoogleAuthProvider();
-  const facebookProvider = new FacebookAuthProvider();
-  const githubProvider = new GithubAuthProvider();
-  const { user, setUser } = useUserContext();
+  const { user, signIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target;
-
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        e.target.reset();
-        navigate("/dashboard");
-      })
-      .then((error) => console.error(error));
-  };
-
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error(error));
-  };
-
-  const handleFacebookLogin = () => {
-    signInWithPopup(auth, facebookProvider)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error(error));
-  };
-
-  const handleGithubSignin = () => {
-    signInWithPopup(auth, githubProvider)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error(error));
+    signIn(email.value, password.value);
+    navigate("/dashboard");
   };
 
   return (
@@ -107,24 +63,24 @@ const Login = () => {
         </form>
       </div>
       <div className="flex flex-wrap gap-4 justify-center items-center">
-        <button
+        {/* <button
           onClick={handleGoogleLogin}
           className="flex gap-2 items-center bg-gray-50 text-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <FcGoogle /> Login with google
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={handleFacebookLogin}
           className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <AiFillFacebook /> Login with Facebook
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={handleGithubSignin}
           className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <AiFillGithub /> Login with Github
-        </button>
+        </button> */}
       </div>
       <div>
         <p>
