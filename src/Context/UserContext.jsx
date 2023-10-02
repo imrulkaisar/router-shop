@@ -24,6 +24,7 @@ const UserContextProvider = ({ children }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
         console.log(response.user);
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.error(error);
