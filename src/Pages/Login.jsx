@@ -6,15 +6,26 @@ import { AiFillFacebook, AiFillGithub } from "react-icons/ai";
 import { UserContext } from "../Context/UserContext";
 
 const Login = () => {
-  const { user, signIn } = useContext(UserContext);
+  const {
+    loading,
+    user,
+    signIn,
+    signInWithGoogle,
+    signInWithFacebook,
+    signInWithGithub,
+  } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target;
     signIn(email.value, password.value);
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
+
+  if (loading) {
+    return <p>loading data...</p>;
+  }
 
   return (
     <div className="max-w-md mx-auto flex flex-col space-y-5">
@@ -63,24 +74,24 @@ const Login = () => {
         </form>
       </div>
       <div className="flex flex-wrap gap-4 justify-center items-center">
-        {/* <button
-          onClick={handleGoogleLogin}
+        <button
+          onClick={signInWithGoogle}
           className="flex gap-2 items-center bg-gray-50 text-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <FcGoogle /> Login with google
-        </button> */}
-        {/* <button
-          onClick={handleFacebookLogin}
+        </button>
+        <button
+          onClick={signInWithFacebook}
           className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <AiFillFacebook /> Login with Facebook
-        </button> */}
-        {/* <button
-          onClick={handleGithubSignin}
+        </button>
+        <button
+          onClick={signInWithGithub}
           className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <AiFillGithub /> Login with Github
-        </button> */}
+        </button>
       </div>
       <div>
         <p>

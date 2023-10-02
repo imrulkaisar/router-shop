@@ -1,51 +1,24 @@
-import {
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook, AiFillGithub } from "react-icons/ai";
 
 import auth from "../Firebase/Firebase.config";
 import { UserContext } from "../Context/UserContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 
 const Signup = () => {
-  const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
-  const { user } = useContext(UserContext);
-  const navigate = useNavigate();
+  const {
+    user,
+    createUser,
+    signInWithGoogle,
+    signInWithFacebook,
+    signInWithGithub,
+  } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target;
-
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        e.target.reset();
-        navigate("/dashboard");
-      })
-      .then((error) => console.error(error));
-  };
-
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error(error));
-  };
-  const handleGithubSignin = () => {
-    signInWithPopup(auth, githubProvider)
-      .then((result) => {
-        setUser({ ...user, ...result.user, isLoggedIn: true });
-        navigate("/dashboard");
-      })
-      .catch((error) => console.error(error));
+    createUser(email.value, password.value);
   };
 
   return (
@@ -96,16 +69,19 @@ const Signup = () => {
       </div>
       <div className="flex flex-wrap gap-4 justify-center items-center">
         <button
-          onClick={handleGoogleLogin}
+          onClick={signInWithGoogle}
           className="flex gap-2 items-center bg-gray-50 text-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <FcGoogle /> Sign up with google
         </button>
-        <button className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize">
+        <button
+          onClick={signInWithFacebook}
+          className="flex gap-2 items-center bg-blue-700 text-white py-2 px-6 font-semibold rounded-lg capitalize"
+        >
           <AiFillFacebook /> Sign up with Facebook
         </button>
         <button
-          onClick={handleGithubSignin}
+          onClick={signInWithGithub}
           className="flex gap-2 items-center text-gray-50 bg-slate-800 py-2 px-6 font-semibold rounded-lg capitalize"
         >
           <AiFillGithub /> Sign up with Github
